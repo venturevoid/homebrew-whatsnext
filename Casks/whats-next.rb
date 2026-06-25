@@ -1,12 +1,23 @@
 cask "whats-next" do
-  version :latest
-  sha256 :no_check
+  version "0.4.8"
+  sha256 "90ccb9cc0b7ffd1c61a03d198fa68205a9d98f7e93318ed637926ec144a3096c"
 
-  url "https://whatsnext.venturevoid.com/downloads/WhatsNext.dmg"
+  url "https://whatsnext.venturevoid.com/downloads/WhatsNext-#{version}.dmg"
   name "What's Next"
   desc "Menu-bar app that shows your next meeting and joins it in one click"
   homepage "https://whatsnext.venturevoid.com/"
 
+  # Track new versions from the Sparkle appcast the app already publishes.
+  # The appcast carries both shortVersionString and a build number;
+  # `&:short_version` keeps livecheck comparing against the marketing
+  # version only (0.4.8), which is what the cask pins.
+  livecheck do
+    url "https://whatsnext.venturevoid.com/appcast.xml"
+    strategy :sparkle, &:short_version
+  end
+
+  # The app updates itself in-place via Sparkle (EdDSA-signed appcast).
+  auto_updates true
   # Hard requirement: the UI is built on the macOS 26 (Tahoe) Liquid
   # Glass APIs, called without availability fallbacks — it will not run
   # on earlier systems.
@@ -19,9 +30,7 @@ cask "whats-next" do
 
   # `zap` removes every file artefact the (sandboxed) app leaves behind.
   # Almost everything lives under the sandbox container; the rest are the
-  # standard per-bundle-id Library locations macOS may create. The app
-  # keeps itself up to date via Sparkle, so the cask is pinned to
-  # :latest and just bootstraps the install.
+  # standard per-bundle-id Library locations macOS may create.
   #
   # Not removable from a cask (macOS limitation, not an omission):
   #   - the Login Item registered via SMAppService — macOS prunes it
