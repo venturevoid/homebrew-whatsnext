@@ -1,6 +1,6 @@
 cask "whats-next" do
-  version "0.4.8"
-  sha256 "90ccb9cc0b7ffd1c61a03d198fa68205a9d98f7e93318ed637926ec144a3096c"
+  version "0.4.9"
+  sha256 "ba6aa49cbbacc12bdb916536f7be9fc73f391bf59912937b1dcf2e3f4eaa4c8f"
 
   url "https://whatsnext.venturevoid.com/downloads/WhatsNext-#{version}.dmg"
   name "What's Next"
